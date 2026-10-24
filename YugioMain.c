@@ -2,6 +2,7 @@
 #include "card.h"
 #include "player.h"
 
+int choice;
 
 void createMenu()
 {
@@ -15,8 +16,8 @@ void createMenu()
 int getUserInput()
 {
     int userChoice;
-    printf("select an option ");
-    scanf("%d ", &userChoice);
+    printf("select an option: ");
+    scanf(" %d", &userChoice);
 
     return userChoice;
 }
@@ -26,25 +27,36 @@ void handleInput(int userChoice)
     switch(userChoice)
     {
      case 1:
-     printf("create players");
+     printf("create players \n");
      break;
 
      case 2:
-     printf("add cards to players");
+     printf("add cards to players \n");
      break;
 
      case 3:
-     printf("battle players");
+     printf("battle players \n");
      break;
 
      case 4:
-     printf("quit game");
+     printf("quit game \n");
      break;
 
      default:
-     printf("not valid option");
+     printf("not valid option \n");
+     int c;
+     while ((c = getchar()) != '\n' && c != EOF) {
+            /* throw away the bad input */
+        }
+     createMenu();
+     int choice = getUserInput();
+     handleInput(choice);
+     
+
      break;
     }
+
+   
 
    
 }
@@ -54,5 +66,8 @@ void main()
   createMenu();
   int choice = getUserInput();
   handleInput(choice);
+  
 }
+
+
 
