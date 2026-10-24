@@ -1,1 +1,2 @@
-#include "battle.h"
+#include "card.h"
+#include "player.h"
