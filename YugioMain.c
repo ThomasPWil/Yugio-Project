@@ -1,16 +1,10 @@
-#include <stdio.h>
-
-
 void createMenu()
 {
     printf("========== YU-GI-OH! CARD BATTLE ==========\n");
     printf("1. Create Players \n");
     printf("2. Add Cards to Players \n");
-    printf("3. Battle Other Player");
+    printf("3. Battle Other Player \n");
     printf("4. Quit Game\n");
-
-    printf("select an option ");
-    scanf("%d ", &userChoice);
 }
 
 int getUserInput()
