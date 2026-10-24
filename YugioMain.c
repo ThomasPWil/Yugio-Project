@@ -1,3 +1,8 @@
+#include "battle.h"
+#include "card.h"
+#include "player.h"
+
+
 void createMenu()
 {
     printf("========== YU-GI-OH! CARD BATTLE ==========\n");
