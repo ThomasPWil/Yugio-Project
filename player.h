@@ -18,12 +18,4 @@ typedef struct player {
   
 } Player;
 
-void push(int value)
-{
-  
-}
 
-int pop()
-{
- 
-}
