@@ -11,3 +11,6 @@ typedef struct monsterCard {
   char type[50];
 
 } Card;
+
+
+void createCards();
