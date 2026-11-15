@@ -22,7 +22,7 @@ Node* push(Node* deckToPopulate, MonsterCard Mcard)
 
 int deleteHead(Node **head)
 {
-  Node *temp = *head
+  Node *temp = *head;
   *head = (*head)->next;
   free(temp);
   return 0;
