@@ -30,4 +30,6 @@ int getP1_Health();
 
 int getP2_Health();
 
+void printStack(Node *deck);
+
 
