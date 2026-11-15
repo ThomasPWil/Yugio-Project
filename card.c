@@ -2,21 +2,22 @@
 
 MonsterCard makeCard(char name[], int atk, int def, char type[]) {
     MonsterCard card;
-
-    strncpy(card.name, name, 99);
-    card.name[99] = '\0';
-
+    strcpy(card.name, name);
+    
     card.atk = atk;
     card.def = def;
-    card.type = type;
+
+    strcpy(card.type, type);
 
     return card;
 }
 
 void printCard(MonsterCard card) {
-    char nameCap[] = card.name;
+    char nameCap[100];
+    strcpy(nameCap, card.name);
+
     int i = 0;
-    str[i] = toupper((unsigned char)str[i]);
+    nameCap[i] = toupper((unsigned char)nameCap[i]);
     while(nameCap[i]) {
         nameCap[i] = toupper((unsigned char)nameCap[i]);
         i++;
@@ -27,3 +28,10 @@ void printCard(MonsterCard card) {
     printf("TYPE: %s\n", card.type);
     printf("\n");
 }
+
+
+void validateCard(MonsterCard card);
+
+int atkBonus(char atkType[], char defType[]);
+
+int defBonus(char atkType[], char defType[]);
