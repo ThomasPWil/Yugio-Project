@@ -10,6 +10,13 @@ typedef struct player {
   
 } Player;
 
+typedef struct Node
+{
+  MonsterCard card;
+  struct Node* next;
+  struct Node* prev;
+}Node;
+
 // player structs to be created in player.c
 extern Player player1;
 extern Player player2;
