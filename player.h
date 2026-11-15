@@ -11,9 +11,15 @@ typedef struct Node
 }Node;
 
 typedef struct player {
+  char name[];
+
   int hp;
 
-  node *deck;
+  Node *deck;
+
+  Node hand[];
+
+  queue atkQueue;
   
 } Player;
 
@@ -31,5 +37,3 @@ int getP1_Health();
 int getP2_Health();
 
 void printStack(Node *deck);
-
-
