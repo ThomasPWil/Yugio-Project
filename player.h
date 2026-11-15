@@ -42,7 +42,7 @@ int dequeue(queue *q, MonsterCard card);
 extern Player player1;
 extern Player player2;
 
-void populateDecks(node** deckToPopulate);
+void populateDecks(Node** deck1, Node** deck2);
 
 void createPlayers();
 
