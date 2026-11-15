@@ -23,6 +23,20 @@ typedef struct player {
   
 } Player;
 
+typedef struct Queue
+{
+  Node* front;
+  Node* rear;
+
+}queue;
+
+queue createQueue();
+
+void enqueue(queue *q, MonsterCard card);
+
+int dequeue(queue *q, MonsterCard card);
+
+
 
 // player structs to be created in player.c
 extern Player player1;
