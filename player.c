@@ -5,6 +5,12 @@
 Player player1;
 Player player2;
 
+int p1_hp = 8000;
+int p2_hp = 8000;
+
+Node *deck_p1;
+Node *deck_p2;
+
 void main()
 {
   createAllCards();
