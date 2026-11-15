@@ -1,7 +1,6 @@
 #include "player.h"
 #include "card.h"
 
-
 Player player1;
 Player player2;
 
@@ -11,6 +10,8 @@ int p2_hp = 8000;
 Node *deck_p1;
 Node *deck_p2;
 
+int deckTotal = 30;
+
 Node* push(Node* deckToPopulate, MonsterCard Mcard)
 {
   struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
@@ -19,9 +20,22 @@ Node* push(Node* deckToPopulate, MonsterCard Mcard)
   
 }
 
+int deleteHead(Node **head)
+{
+  Node *temp = *head
+  *head = (*head)->next;
+  free(temp);
+  return 0;
+}
+
+int pop(Node **deck)
+{
+  deleteHead(deck);
+}
+
 void printStack(Node *deck)
 {
-  Node *temp = deck_p1;
+  Node *temp = deck;
   while(temp != NULL)
   {
     printf("%s -> \n", temp->card.name);
@@ -29,20 +43,28 @@ void printStack(Node *deck)
   }
 }
 
-void populateDecks(node** deckToPopulate)
+void populateDecks(Node** deck1, Node** deck2)
 {
-  // add cards to deck stack
-  push(deckToPopulate,cardTest);
-  push(deckToPopulate,cardTest2);
+  // use for loop and have an array of cards
+  for(int i = 0; i < 30; i++)
+  {
+    // have array and push first 30 elements into p1 deck
+  }
+
+  for(int j = 0; j < 30; j ++)
+  {
+    // push next 30 into deck
+  }
+
+  //push(deckToPopulate,cardTest);
+  //push(deckToPopulate,cardTest2);
 }
 
 void createPlayers()
 {
-  player1 = (Player){8000, deck_p1};
-  populateDecks(&deck_p1);
- 
-  player2 = (Player){8000,deck_p2};
-  populateDecks(&deck_p2);
+  player1 = (Player){p1_hp, deck_p1};
+  player2 = (Player){p2_hp,deck_p2};
+  populateDecks(&deck_p1, &deck_p2);
 }
 
 int getP1_Health()
@@ -57,9 +79,9 @@ int getP2_Health()
 
 void main()
 {
-  createAllCards();
+  //createAllCards();
   createPlayers();
-  printStack(&deck_p1);
+  printStack(deck_p1);
+  printStack(deck_p2);
   
 }
-
