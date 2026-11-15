@@ -5,23 +5,19 @@
 
 typedef struct Node
 {
-  int data;
+  MonsterCard card;
   struct Node* next;
   
 }Node;
 
 typedef struct player {
-  char name[];
-
   int hp;
 
   Node *deck;
-
-  Node hand[];
-
-  queue atkQueue;
   
 } Player;
+
+Node *createNode(MonsterCard card);
 
 typedef struct Queue
 {
@@ -30,12 +26,11 @@ typedef struct Queue
 
 }queue;
 
-queue createQueue();
+queue *createQueue();
 
 void enqueue(queue *q, MonsterCard card);
 
 int dequeue(queue *q, MonsterCard card);
-
 
 
 // player structs to be created in player.c
@@ -46,8 +41,9 @@ void populateDecks(Node** deck1, Node** deck2);
 
 void createPlayers();
 
+void queueHand();
+
 int getP1_Health();
 
 int getP2_Health();
 
-void printStack(Node *deck);
