@@ -11,6 +11,24 @@ int p2_hp = 8000;
 Node *deck_p1;
 Node *deck_p2;
 
+Node* push(Node* deckToPopulate, MonsterCard Mcard)
+{
+  struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+  newNode->card = Mcard;
+  newNode->next = deckToPopulate;
+  
+}
+
+void printStack(Node *deck)
+{
+  Node *temp = deck_p1;
+  while(temp != NULL)
+  {
+    printf("%s -> \n", temp->card.name);
+    temp = temp->next;
+  }
+}
+
 void populateDecks(node** deckToPopulate)
 {
   // add cards to deck stack
