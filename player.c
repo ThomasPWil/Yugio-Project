@@ -10,6 +10,9 @@ int p2_hp = 8000;
 Node *deck_p1;
 Node *deck_p2;
 
+queue *p1_hand;
+queue *p2_hand;
+
 int deckTotal = 30;
 
 Node* push(Node* deckToPopulate, MonsterCard Mcard)
@@ -18,6 +21,20 @@ Node* push(Node* deckToPopulate, MonsterCard Mcard)
   newNode->card = Mcard;
   newNode->next = deckToPopulate;
   
+}
+
+Node *createNode(MonsterCard card)
+{
+  Node *newNode = (Node *)malloc(sizeof(Node));
+
+  if(newNode == NULL)
+  {
+    return NULL;
+  }
+  
+  newNode->card = card;
+  newNode->next = NULL;
+  return newNode;
 }
 
 int deleteHead(Node **head)
@@ -43,6 +60,32 @@ void printStack(Node *deck)
   }
 }
 
+queue *createQueue()
+{
+  queue *newQueue = (queue *)malloc(sizeof(queue));
+  newQueue->front = newQueue->rear = NULL;
+  return newQueue;
+}
+
+void enqueue(queue* q, MonsterCard card)
+{
+  Node *newNode = createNode(card);
+  if(q->rear == NULL)
+  {
+    q->front = q->rear = createNode(card);
+    return;
+  }
+
+  q->rear->next = newNode;
+  q->rear = newNode;
+}
+
+void queueHand()
+{
+  // draw 5 cards into player 1 and player 2 hands
+}
+
+
 void populateDecks(Node** deck1, Node** deck2)
 {
   // use for loop and have an array of cards
@@ -65,6 +108,8 @@ void createPlayers()
   player1 = (Player){p1_hp, deck_p1};
   player2 = (Player){p2_hp,deck_p2};
   populateDecks(&deck_p1, &deck_p2);
+
+  //make player hands (will add in later)
 }
 
 int getP1_Health()
