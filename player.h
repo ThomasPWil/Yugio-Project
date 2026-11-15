@@ -7,7 +7,7 @@ typedef struct Node
 {
   MonsterCard card;
   struct Node* next;
-  struct Node* prev;
+  
 }Node;
 
 typedef struct player {
