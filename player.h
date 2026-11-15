@@ -26,4 +26,8 @@ void populateDecks(node** deckToPopulate);
 
 void createPlayers();
 
+int getP1_Health();
+
+int getP2_Health();
+
 
