@@ -1,6 +1,6 @@
 #include "card.h"
 
-MonsterCard createCard(char name[], int atk, int def, MonsterType type) {
+MonsterCard makeCard(char name[], int atk, int def, char type[]) {
     MonsterCard card;
 
     strncpy(card.name, name, 99);
@@ -12,3 +12,4 @@ MonsterCard createCard(char name[], int atk, int def, MonsterType type) {
 
     return card;
 }
+
