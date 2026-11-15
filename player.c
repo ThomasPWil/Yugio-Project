@@ -11,14 +11,6 @@ int p2_hp = 8000;
 Node *deck_p1;
 Node *deck_p2;
 
-void main()
-{
-  createAllCards();
-  createPlayers();
-  printStack(&deck_p1);
-  
-}
-
 void populateDecks(node** deckToPopulate)
 {
   // add cards to deck stack
@@ -34,3 +26,22 @@ void createPlayers()
   player2 = (Player){8000,deck_p2};
   populateDecks(&deck_p2);
 }
+
+int getP1_Health()
+{
+  return player1.hp;
+}
+
+int getP2_Health()
+{
+  return player2.hp;
+}
+
+void main()
+{
+  createAllCards();
+  createPlayers();
+  printStack(&deck_p1);
+  
+}
+
