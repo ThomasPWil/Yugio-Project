@@ -30,7 +30,18 @@ void printCard(MonsterCard card) {
 }
 
 
-void validateCard(MonsterCard card);
+int validateCard(MonsterCard card) {
+    if (strlen(card.name) == 0)
+        return 0;
+    if (card.atk < 0)
+        return 0;
+    if (card.def < 0)
+        return 0;
+    if (strlen(card.type) == 0)
+        return 0;
+
+    return 1;
+}
 
 int atkBonus(char atkType[], char defType[]);
 
