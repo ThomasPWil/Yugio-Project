@@ -31,22 +31,20 @@ typedef struct Queue {
 
 Queue *createQueue();
 
-void enqueue(queue *q, MonsterCard card);
+void enqueue(Queue *q, MonsterCard card);
 
-int dequeue(queue *q, MonsterCard card);
+int dequeue(Queue *q, MonsterCard card);
 
 
 // player structs to be created in player.c
 extern Player player1;
 extern Player player2;
 
-void populateDecks(Node** deck1, Node** deck2);
+void populateDecks(Deck deck1, Deck deck2);
 
-void createPlayers();
+Player *makePlayer();
 
 void queueHand();
 
-int getP1_Health();
-
-int getP2_Health();
+int getHealth(Player player);
 
