@@ -3,30 +3,33 @@
 #include <stdlib.h>
 #include "card.h"
 
-typedef struct Node
-{
-  MonsterCard card;
-  struct Node* next;
-  
-}Node;
-
 typedef struct player {
+  char name[50];
   int hp;
 
-  Node *deck;
+  Deck deck;
+
+  MonsterCard hand[5];
+  int handCount;
+
+  Queue atkQueue;
+  Queue defQueue;
   
 } Player;
 
-Node *createNode(MonsterCard card);
+typedef struct Deck{
+  MonsterCard cards[40];
+  int top;
+}Deck;
 
-typedef struct Queue
-{
-  Node* front;
-  Node* rear;
+typedef struct Queue {
+  MonsterCard cards[30];
+  int front;
+  int rear;
+  int size;
+} Queue;
 
-}queue;
-
-queue *createQueue();
+Queue *createQueue();
 
 void enqueue(queue *q, MonsterCard card);
 
