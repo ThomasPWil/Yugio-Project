@@ -47,20 +47,19 @@ int atkBonus(char atkType[], char defType[])
 {
     // will have 3 types fire,water and grass
 
-    //if strong against a type it does double damage
-    if(strcmp(atkType, "Fire") == 0 && strcmp(defType, "Grass") == 0)
+   if(strcmp(atkType, "Fire") == 0 && strcmp(defType, "Grass") == 0)
     {
-      return 1;
+      card.atk *= 2;
     }
 
     if(strcmp(atkType, "Water") == 0 && strcmp(defType, "Fire") == 0)
     {
-      return 1;
+      card.atk *= 2;
     }
 
     if(strcmp(atkType, "Grass") == 0 && strcmp(defType, "Water") == 0)
     {
-      return 1;
+      card.atk *= 2;
     }
 
     return 0;
@@ -71,19 +70,19 @@ int defBonus(char atkType[], char defType[]) {
 
     if(strcmp(atkType, "Fire") == 0 && strcmp(defType, "Water") == 0)
     {
-      return 1;
+      card.atk /= 2;
     }
 
     if(strcmp(atkType, "Water") == 0 && strcmp(defType, "Grass") == 0)
     {
-      return 1;
+      card.atk /= 2;
     }
 
     if(strcmp(atkType, "Grass") == 0 && strcmp(defType, "Fire") == 0)
     {
-      return 1;
+      card.atk /= 2;
     }
-
+    
     return 0;
 }
 
