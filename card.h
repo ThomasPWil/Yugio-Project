@@ -25,5 +25,10 @@ int atkBonus(char atkType[], char defType[]);
 
 int defBonus(char atkType[], char defType[]);
 
+// adding this to quickly retreve atk of a card
+int getAtk(MonsterCard card);
+
+// adding this to retreve def of card
+int getDef(MonsterCard card);
 
 #endif
