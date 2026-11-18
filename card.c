@@ -49,17 +49,17 @@ int atkBonus(char atkType[], char defType[])
 
    if(strcmp(atkType, "Fire") == 0 && strcmp(defType, "Grass") == 0)
     {
-      card.atk *= 2;
+       return 1;
     }
 
     if(strcmp(atkType, "Water") == 0 && strcmp(defType, "Fire") == 0)
     {
-      card.atk *= 2;
+      return 1;
     }
 
     if(strcmp(atkType, "Grass") == 0 && strcmp(defType, "Water") == 0)
     {
-      card.atk *= 2;
+       return 1;
     }
 
     return 0;
@@ -70,17 +70,17 @@ int defBonus(char atkType[], char defType[]) {
 
     if(strcmp(atkType, "Fire") == 0 && strcmp(defType, "Water") == 0)
     {
-      card.atk /= 2;
+       return 1;
     }
 
     if(strcmp(atkType, "Water") == 0 && strcmp(defType, "Grass") == 0)
     {
-      card.atk /= 2;
+       return 1;
     }
 
     if(strcmp(atkType, "Grass") == 0 && strcmp(defType, "Fire") == 0)
     {
-      card.atk /= 2;
+       return 1;
     }
     
     return 0;
