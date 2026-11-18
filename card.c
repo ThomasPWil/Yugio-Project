@@ -43,47 +43,49 @@ int validateCard(MonsterCard card) {
     return 1;
 }
 
-int atkBonus(char atkType[], char defType[], MonsterCard card)
+int atkBonus(char atkType[], char defType[])
 {
     // will have 3 types fire,water and grass
 
     //if strong against a type it does double damage
     if(strcmp(atkType, "Fire") == 0 && strcmp(defType, "Grass") == 0)
     {
-      card.atk *= 2;
+      return 1;
     }
 
     if(strcmp(atkType, "Water") == 0 && strcmp(defType, "Fire") == 0)
     {
-      card.atk *= 2;
+      return 1;
     }
 
     if(strcmp(atkType, "Grass") == 0 && strcmp(defType, "Water") == 0)
     {
-      card.atk *= 2;
+      return 1;
     }
 
+    return 0;
+}
+
+int defBonus(char atkType[], char defType[]) {
     //if weak against a type it does half damage
 
     if(strcmp(atkType, "Fire") == 0 && strcmp(defType, "Water") == 0)
     {
-      card.atk /= 2;
+      return 1;
     }
 
     if(strcmp(atkType, "Water") == 0 && strcmp(defType, "Grass") == 0)
     {
-      card.atk /= 2;
+      return 1;
     }
 
     if(strcmp(atkType, "Grass") == 0 && strcmp(defType, "Fire") == 0)
     {
-      card.atk /= 2;
+      return 1;
     }
-    
-    
-}
 
-int defBonus(char atkType[], char defType[]);
+    return 0;
+}
 
 int getAtk(MonsterCard card)
 {
