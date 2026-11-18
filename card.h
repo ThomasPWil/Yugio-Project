@@ -21,7 +21,7 @@ void printCard(MonsterCard card);
 
 int validateCard(MonsterCard card);
 
-int atkBonus(char atkType[], char defType[], MonsterCard card);
+int atkBonus(char atkType[], char defType[]);
 
 int defBonus(char atkType[], char defType[]);
 
