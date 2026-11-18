@@ -19,9 +19,9 @@ MonsterCard makeCard(char name[], int atk, int def, char type[]);
 
 void printCard(MonsterCard card);
 
-void validateCard(MonsterCard card);
+int validateCard(MonsterCard card);
 
-int atkBonus(char atkType[], char defType[]);
+int atkBonus(char atkType[], char defType[], MonsterCard card);
 
 int defBonus(char atkType[], char defType[]);
 
