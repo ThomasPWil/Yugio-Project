@@ -19,6 +19,21 @@ FILE *cards;
 
 MonsterCard cardArr[60] = {};
 
+Queue *createQueue() {
+    Queue *newQueue = malloc(sizeof(Queue));
+    
+    if(newQueue == NULL) {
+        printf("Memory Allocation Failed\n");
+        return NULL;
+    }
+
+    newQueue->front = 0;
+    newQueue->rear = -1;
+    newQueue->size = 0;
+    
+    return newQueue;
+}
+
 int insertBeforeHead(Node **head, MonsterCard card)
 {
     // creating new node
