@@ -80,7 +80,7 @@ void endBattle()
 
   printf("player1 life points %d", p1_hp);
   printf("player2 life points %d", p2_hp);
-  printf("rounds played: \n", rounds);
+  printf("rounds played: %d \n", rounds);
 }
 
 void displayTurnMenu(char str[50], Queue hand)
