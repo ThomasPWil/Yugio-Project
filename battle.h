@@ -19,4 +19,4 @@ int getDamage2Atks(int atk1,int atk2);
 
 void endBattle();
 
-void displayTurnMenu();
+void displayTurnMenu(char str[50], Queue hand);
