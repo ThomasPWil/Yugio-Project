@@ -7,19 +7,13 @@ Player player2;
 int p1_hp = 8000;
 int p2_hp = 8000;
 
-Node *deck_p1;
-Node *deck_p2;
-
-queue *p1_hand;
-queue *p2_hand;
-
 int deckTotal = 30;
 
 FILE *cards;
 
 MonsterCard cardArr[60] = {};
 
-Queue *createQueue() {
+Queue *createQueue() { //creates and initializes queue
     Queue *newQueue = malloc(sizeof(Queue));
     
     if(newQueue == NULL) {
@@ -34,107 +28,45 @@ Queue *createQueue() {
     return newQueue;
 }
 
-int insertBeforeHead(Node **head, MonsterCard card)
-{
-    // creating new node
-    Node *newNode = createNode(card);
-    // if malloc fail, return error code
-    if (!newNode)
-        return -1;
+int isEmpty(Queue *q) { //checks if a queue is empty
+    return q->size == 0;
+}
 
-    // if the linked list is empty
-    if (*head == NULL)
-    {
-        *head = newNode;
-        return 0;
+int isFull(Queue *q) { //checks if a queue is full
+    return q->size ==30;
+}
+
+void enqueue(Queue* q, MonsterCard card) {
+    if (q->size == 30) {
+        printf("Queue is full!\n");
+        return;
     }
 
-    newNode->next = *head;
-    *head = newNode;
-    return 0;
+    q->rear = (q->rear + 1) % 30;
+    q->cards[q->rear] = card;
+    q->size++;
 }
 
-Node* push(Node** deckToPopulate, MonsterCard Mcard)
-{
-  /*
-  struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
-  newNode->card = Mcard;
-  newNode->next = NULL;
-  */
+MonsterCard dequeue(Queue *q) {
+    MonsterCard card;
 
-  if (insertBeforeHead(deckToPopulate, Mcard))
-  {
-    printf("Stack Overflow!\n");
-  }
-  
+    if(q->size == 0) {
+        printf("Queue is empty!\n");
+        return card;
+    }
+
+    card = q->cards[q->front];
+    q->front = (q->front + 1) %30;
+    q->size--;
+
+    return card;
 }
 
-Node *createNode(MonsterCard card)
-{
-  Node *newNode = (Node *)malloc(sizeof(Node));
-
-  if(newNode == NULL)
-  {
-    return NULL;
-  }
-  
-  newNode->card = card;
-  newNode->next = NULL;
-  return newNode;
-}
-
-int deleteHead(Node **head)
-{
-  Node *temp = *head;
-  *head = (*head)->next;
-  free(temp);
-  return 0;
-}
-
-int pop(Node **deck)
-{
-  deleteHead(deck);
-}
-
-void printStack(Node **deck)
-{
- 
-  Node *temp = *deck;
-  while(temp != NULL)
-  {
-    printf("%s -> \n", temp->card.name);
-    temp = temp->next;
-  }
-  printf("deck null \n");
-}
-
-queue *createQueue()
-{
-  queue *newQueue = (queue *)malloc(sizeof(queue));
-  newQueue->front = newQueue->rear = NULL;
-  return newQueue;
-}
-
-void enqueue(queue* q, MonsterCard card)
-{
-  Node *newNode = createNode(card);
-  if(q->rear == NULL)
-  {
-    q->front = q->rear = createNode(card);
-    return;
-  }
-
-  q->rear->next = newNode;
-  q->rear = newNode;
-}
-
-void queueHand()
-{
+void queueHand() {
   // draw 5 cards into player 1 and player 2 hands
 }
 
-int handleCardFile()
-{
+int handleCardFile() {
   cards = fopen("cards.txt", "r");
   char buffer[100];
 
@@ -151,35 +83,28 @@ int handleCardFile()
     return 0;
   }
   
-  while (curr != 2)
-  {
-    fscanf(cards, "%s %d %d %s", name, &attack, &defense, type);
-    cardArr[curr] =  makeCard(name,attack,defense,type);
-    printf("Name: %s \n", cardArr[curr].name);
-    curr++;
+  while (curr < 30 && fscanf(card, "%s %d %d %s", name, &attack, &defense, type) == 4) {
+      cardArr[curr] = makeCard(name, attack, defense, type);
+      curr++;
   }
-      
-       
-       
 
+    fclose(cards);
+    return curr;
 }
 
-void populateDecks(Node** deck1, Node** deck2)
+void populateDeck(Deck deck)
 {
-  handleCardFile();
+  int numCards = handleCardFile();
   // use for loop and have an array of cards
-  for(int i = 0; i < 2; i++)
+  for(int i = 0; i < numCards; i++)
   {
-    push(&deck1,cardArr[i]);
+      deck->cards[i] = cardArr[i]
   }
 
   for(int j = 31; j < 60; j ++)
   {
     // push next 30 into deck
   }
-
-  //push(deckToPopulate,cardTest);
-  //push(deckToPopulate,cardTest2);
 }
 
 void createPlayers()
@@ -203,9 +128,5 @@ int getP2_Health()
 
 void main()
 {
-  //createAllCards();
-  createPlayers();
-  printStack(&deck_p1);
-  //printStack(deck_p2);
-  
+ return 0; 
 }
