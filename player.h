@@ -4,7 +4,7 @@
 #include "card.h"
 
 typedef struct Deck{
-  MonsterCard cards[40];
+  MonsterCard cards[30];
   int top;
 }Deck;
 
@@ -32,20 +32,24 @@ typedef struct player {
 
 Queue *createQueue();
 
-void initPlayer(Player *player, char *name);
+int isEmpty(Queue *q);
+
+int isFull(Queue *q);
 
 void enqueue(Queue *q, MonsterCard card);
 
-int dequeue(Queue *q, MonsterCard card);
+MonsterCard dequeue(Queue *q);
+
+void queueHand();
+
+int handleCardFile();
+
+void populateDeck(Deck deck);
+
+void createPlayers();
 
 
 // player structs to be created in player.c
 extern Player player1;
 extern Player player2;
-
-void populateDecks(Deck deck1, Deck deck2);
-
-void queueHand();
-
-int getHealth(Player player);
 
