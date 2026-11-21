@@ -9,6 +9,9 @@ int p2_hp = 8000;
 
 int deckTotal = 30;
 
+Deck deck_p1;
+Deck deck_p2;
+
 FILE *cards;
 
 MonsterCard cardArr[60] = {};
@@ -83,7 +86,7 @@ int handleCardFile() {
     return 0;
   }
   
-  while (curr < 30 && fscanf(card, "%s %d %d %s", name, &attack, &defense, type) == 4) {
+  while (curr < 30 && fscanf(cards, "%s %d %d %s", name, &attack, &defense, type) == 4) {
       cardArr[curr] = makeCard(name, attack, defense, type);
       curr++;
   }
@@ -92,26 +95,29 @@ int handleCardFile() {
     return curr;
 }
 
-void populateDeck(Deck deck)
+void populateDeck(Deck *deck)
 {
   int numCards = handleCardFile();
   // use for loop and have an array of cards
   for(int i = 0; i < numCards; i++)
   {
-      deck->cards[i] = cardArr[i]
+    deck->cards[i] = cardArr[i];
   }
 
   for(int j = 31; j < 60; j ++)
   {
     // push next 30 into deck
   }
+
+   deck->top = numCards;
 }
 
 void createPlayers()
 {
-  player1 = (Player){p1_hp, deck_p1};
-  player2 = (Player){p2_hp,deck_p2};
-  populateDecks(&deck_p1, &deck_p2);
+  player1 = (Player){"Player1",p1_hp, deck_p1};
+  player2 = (Player){"Player2",p2_hp,deck_p2};
+  populateDeck(&deck_p1);
+  populateDeck(&deck_p2);
 
   //make player hands (will add in later)
 }
@@ -119,5 +125,5 @@ void createPlayers()
 
 void main()
 {
- return 0; 
+ return; 
 }
