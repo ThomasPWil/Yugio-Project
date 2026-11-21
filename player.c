@@ -116,15 +116,6 @@ void createPlayers()
   //make player hands (will add in later)
 }
 
-int getP1_Health()
-{
-  return player1.hp;
-}
-
-int getP2_Health()
-{
-  return player2.hp;
-}
 
 void main()
 {
