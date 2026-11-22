@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include "player.h"
 #include <stdbool.h>
 
 void declareWinner();
@@ -15,8 +16,12 @@ void LPCalculations(int currLP, int damage);
 //used for if one player activated an attack card and another activated a defense card
 int getDamage1Atk(int atk, int def);
 
-int getDamage2Atks(int atk1,int atk2);
+int getDamage2Atk(int atk1,int atk2);
 
 void endBattle();
 
-void displayTurnMenu(char str[50], Queue hand);
+int displayTurnMenu(MonsterCard hand[5], Player *player);
+
+void removeAtIndex(MonsterCard hand[5], Player player, int index);
+
+void removeBattleCards(Queue *q);
