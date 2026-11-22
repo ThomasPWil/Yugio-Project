@@ -7,6 +7,9 @@ int rounds = 0;
 bool p1First;
 bool p2First;
 
+int p1Choice; // use these to figure out if which we should attack scenario we should play
+int p2Choice; // use these to figure out if which we should attack scenario we should play
+
 void coinFlip()
 {
   srand(time(NULL));
@@ -36,6 +39,8 @@ void LPCalculations(int currLP, int damage)
 int getDamage1Atk(int atk, int def)
 {
   // need to check for type bonuses calcualtions
+  //atkBonus();
+  //defBonus();
   return atk - def;
 }
 
@@ -43,6 +48,7 @@ int getDamage1Atk(int atk, int def)
 int getDamage2Atk(int atk1,int atk2)
 {
   int damage = 0;
+  
   if(atk1 > atk2)
   {
     // need to check for type bonuses
@@ -61,6 +67,20 @@ int getDamage2Atk(int atk1,int atk2)
   }
 }
 
+void removeAtIndex(MonsterCard hand[5], Player player, int index)
+{
+  for(int i = index; i < player.handCount - 1; i++) 
+  {
+    hand[i] = hand[i + 1];
+  }
+  drawCard(&player);
+}
+
+void removeBattleCards(Queue *q)
+{
+  dequeue(q);
+}
+
 void endBattle()
 {
   if(player1.hp <= 0)
@@ -71,53 +91,58 @@ void endBattle()
   {
     printf("player1 wins!\n");
   }
-  else
+  else if(player1.deck.top == 0 && player2.deck.top == 0)
   {
-   
     // draw condition occurs when both players run out of cards
     printf("draw! \n");
   }
-
-  printf("player1 life points %d", p1_hp);
-  printf("player2 life points %d", p2_hp);
+  
+  //printf("player1 life points %d", p1_hp);
+  //printf("player2 life points %d", p2_hp);
   printf("rounds played: %d \n", rounds);
 }
 
-void displayTurnMenu(char str[50], Queue hand)
+int displayTurnMenu(MonsterCard hand[5], Player *player)
 {
-  printf("%s's turn",str);
+  printf("%s's turn",player->name);
   // print hand 
   int choice = 0;
   printf("choose a number (1-2) 1 to activate an attack card \n");
-  printf("2 to activate an attack card");
+  printf("2 to activate a defense card");
   scanf(" %d " , &choice);
 
   if(choice == 1)
   {
     printf("choose an attack card to activate (1-5)\n");
     // display list of cards in hand
+    for(int i = 0; i < player->handCount; i++)
+    {
+      printf("%s %d %d \n", player->hand[i].name, player->hand[i].atk, player->hand[i].def);
+    }
+
     int atkChoice = 0;
     scanf(" %d ", &atkChoice);
-
-    // return the selected attack card value 
-    // to be passed into attack functions
-
+    enqueue(&player->atkQueue, player->hand[atkChoice]);
+    removeAtIndex(player->hand, *player, atkChoice);
+    return player->hand[atkChoice].atk;
   }
   else if(choice == 2)
   {
     printf("choose a defense card to activate\n");
     // display list of cards in hand
     int defChoice = 0;
+    for(int i = 0; i < player->handCount; i++)
+    {
+      printf("%s %d %d \n", player->hand[i].name, player->hand[i].atk, player->hand[i].def);
+    }
     scanf(" %d ", &defChoice);
-
-      // return the selected defense card value 
-    // to be passed into attack functions
+    enqueue(&player->defQueue, player->hand[defChoice]);
+    removeAtIndex(player->hand, *player, defChoice);
+    return player->hand[defChoice].def;
+    
   }
 }
 
 
-int main(void)
-{
-  return 0;
-}
+
 
