@@ -59,14 +59,30 @@ MonsterCard dequeue(Queue *q) {
     }
 
     card = q->cards[q->front];
-    q->front = (q->front + 1) %30;
+    q->front = (q->front + 1) % 30;
     q->size--;
 
     return card;
 }
 
-void queueHand() {
+void queueHand(Player *player) {
   // draw 5 cards into player 1 and player 2 hands
+  // move cards from deck array into hand array
+   
+   while (player->handCount < 5 && player->deck.top > 0) {
+      player->deck.top--;
+      player->hand[player->handCount] = player->deck.cards[player->deck.top];
+      player->handCount++;
+    }
+ 
+}
+
+void drawCard(Player *player)
+{
+  player->deck.top--;
+  player->hand[player->handCount] = player->deck.cards[player->deck.top];
+  player->handCount++;
+
 }
 
 int handleCardFile() {
@@ -104,21 +120,20 @@ void populateDeck(Deck *deck)
     deck->cards[i] = cardArr[i];
   }
 
-  for(int j = 31; j < 60; j ++)
-  {
-    // push next 30 into deck
-  }
+   
 
-   deck->top = numCards;
+   //deck->top = numCards;
 }
 
 void createPlayers()
 {
-  player1 = (Player){"Player1",p1_hp, deck_p1, 5, createQueue(), createQueue()};
-  player2 = (Player){"Player2",p2_hp, deck_p2, 5, createQueue(), createQueue()};
-  populateDeck(&deck_p1);
-  populateDeck(&deck_p2);
+  player1 = (Player){"Player1",p1_hp, deck_p1};
+  player2 = (Player){"Player2",p2_hp,deck_p2};
+  player1.atkQueue = *createQueue();
+  player1.defQueue = *createQueue();
 
-  //make player hands (will add in later)
+  queueHand(&player1);
+  queueHand(&player2);
 }
+
 
