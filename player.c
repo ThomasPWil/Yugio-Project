@@ -78,7 +78,7 @@ void queueHand(Player *player) {
 }
 
 void drawCard(Player *player)
-{
+{ 
   player->deck.top--;
   player->hand[player->handCount] = player->deck.cards[player->deck.top];
   player->handCount++;
@@ -102,7 +102,7 @@ int handleCardFile() {
     return 0;
   }
   
-  while (curr < 30 && fscanf(cards, "%s %d %d %s", name, &attack, &defense, type) == 4) {
+  while (curr < 30 && fscanf(cards, " %99[^,],%d,%d,%49[^\r\n]", name, &attack, &defense, type) == 4) {
       cardArr[curr] = makeCard(name, attack, defense, type);
       curr++;
   }
@@ -120,20 +120,19 @@ void populateDeck(Deck *deck)
     deck->cards[i] = cardArr[i];
   }
 
-   
-
-   //deck->top = numCards;
+  deck->top = numCards;
 }
 
 void createPlayers()
 {
-  player1 = (Player){"Player1",p1_hp, deck_p1};
-  player2 = (Player){"Player2",p2_hp,deck_p2};
+  player1 = (Player){"Player 1",p1_hp, deck_p1};
+  player2 = (Player){"Player 2",p2_hp,deck_p2};
   player1.atkQueue = *createQueue();
   player1.defQueue = *createQueue();
 
   queueHand(&player1);
   queueHand(&player2);
 }
+
 
 
