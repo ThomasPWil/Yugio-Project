@@ -114,8 +114,8 @@ void populateDeck(Deck *deck)
 
 void createPlayers()
 {
-  player1 = (Player){"Player1",p1_hp, deck_p1};
-  player2 = (Player){"Player2",p2_hp,deck_p2};
+  player1 = (Player){"Player1",p1_hp, deck_p1, 5, createQueue(), createQueue()};
+  player2 = (Player){"Player2",p2_hp, deck_p2, 5, createQueue(), createQueue()};
   populateDeck(&deck_p1);
   populateDeck(&deck_p2);
 
