@@ -122,8 +122,3 @@ void createPlayers()
   //make player hands (will add in later)
 }
 
-
-void main()
-{
- return; 
-}
