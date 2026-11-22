@@ -1,1 +1,5 @@
 Wisp,25,25,Fire
+Phenonix,50,25,Fire
+Inferno,25,100,Fire
+Pyro,100,25,Fire
+Magmin,25,25,Fire
