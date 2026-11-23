@@ -3,3 +3,9 @@ Phenonix,50,25,Fire
 Inferno,25,100,Fire
 Pyro,100,25,Fire
 Magmin,25,25,Fire
+Polar bear,100,100,Water
+Eskimo,50,50,Water
+Icecube,200,50,Water
+Chiller,25,200,Water
+Iceman,50,50,Water
+Frozen Warrior,100,100,Water
