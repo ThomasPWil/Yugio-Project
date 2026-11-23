@@ -1,11 +1,30 @@
-Wisp,25,25,Fire
-Phenonix,50,25,Fire
-Inferno,25,100,Fire
-Pyro,100,25,Fire
-Magmin,25,25,Fire
-Polar bear,100,100,Water
-Eskimo,50,50,Water
-Icecube,200,50,Water
-Chiller,25,200,Water
-Iceman,50,50,Water
+Wisp,100,100,Fire
+Phenonix,150,125,Fire
+Inferno,125,200,Fire
+Pyro,200,125,Fire
+Magmin,125,125,Fire
+Fire Wizard,300,300,Fire
+Fire Giant,500,500,Fire
+Ash Spawn,500,300,Fire
+Flame Demon,250,500,Fire
+Fire Wraith,500,500,Fire
+Polar Bear,200,200,Water
+Eskimo,150,150,Water
+Icecube,300,150,Water
+Chiller,125,300,Water
+Iceman,150,150,Water
 Frozen Warrior,100,100,Water
+Ice Wraith,500,150,Water
+Frost Troll,250,250,Water
+Snow leopard,100,150,Water
+Frost Wizard,300,300,Water
+Treeant,250,250,Grass
+Spriggan,250,250,Grass
+Frog King,300,500,Grass
+Bear,400,500,Grass
+Forest Elf,250,250,Grass
+Fox,100,100,Grass
+Spore Carrier,300,300,Grass
+Mooshroom,250,100,Grass
+Wolf,150,200,Grass
+Hagraven,250,350,Grass
