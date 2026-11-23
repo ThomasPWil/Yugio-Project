@@ -7,7 +7,7 @@
 bool playersHaveCards;
 bool playersCreated;
 bool battleStarted = false;
-
+bool battleEnded = false;
 bool p1First2;
 bool p2First2;
 
@@ -64,44 +64,49 @@ void handleInput(int userChoice)
      if(playersHaveCards == true && playersCreated == true)
      {
       battleStarted = true;
-      printf("battle players \n");
+      printf("battling players \n");
       coinFlip();
 
       // draw cards
-      drawCard(&player1);
-      drawCard(&player2);
       
-      // place cards into battle queues
       queueHand(&player1);
       queueHand(&player2);
-      // activate cards
-      if(p1First2 == true)
-      {
-        int p1Num = displayTurnMenu(player1.hand, &player1);
-        int p2Num = displayTurnMenu(player2.hand, &player2);
 
-        if(p1Num == 1 && p2Num == 1)
+    
+
+      // place cards into battle queues
+     
+
+      // activate cards
+      if(p1First == true)
+      {
+        while(battleEnded == false)
         {
+          int p1Num = displayTurnMenu(player1.hand, &player1);
+          int p2Num = displayTurnMenu(player2.hand, &player2);
+
+         if(p1Num == 1 && p2Num == 1)
+         {
           getDamage2Atk(player1.atkQueue.cards[player1.atkQueue.front].atk, player2.atkQueue.cards[player2.atkQueue.front].atk);
-        }
-        else if(p1Num == 1 && p2Num == 2)
-        {
-          getDamage1Atk(player1.atkQueue.cards[player1.atkQueue.front].atk, player2.defQueue.cards[player2.defQueue.front].def);
-        }
-        else if(p1Num == 2 && p2Num == 1)
-        {
-          getDamage1Atk(player2.atkQueue.cards[player2.atkQueue.front].atk, player1.defQueue.cards[player1.defQueue.front].def);
+         }
+         else if(p1Num == 1 && p2Num == 2)
+         {
+          getDamage1Atk(player1.atkQueue.cards[player1.atkQueue.front].atk, player2.defQueue.cards[player2.defQueue.front].def, &player1);
+         }
+         else if(p1Num == 2 && p2Num == 1)
+         {
+          getDamage1Atk(player2.atkQueue.cards[player2.atkQueue.front].atk, player1.defQueue.cards[player1.defQueue.front].def, &player2);
+         }
         }
       }
-      else if(p2First2 == true)
+      else if(p2First == true)
       {
-        int p2Num = displayTurnMenu(player2.hand, &player2);
-        int p1Num = displayTurnMenu(player1.hand, &player1);
-
-        
-
-        if(p1Num == 1 && p2Num == 1)
+        while(battleEnded == false)
         {
+         int p2Num = displayTurnMenu(player2.hand, &player2);
+         int p1Num = displayTurnMenu(player1.hand, &player1);
+         if(p1Num == 1 && p2Num == 1)
+         {
           player1.atkQueue.cards[player1.atkQueue.front].atk += atkBonus(player1.atkQueue.cards[player1.atkQueue.front].type, 
           player2.atkQueue.cards[player1.atkQueue.front].type, player1.atkQueue.cards[player1.atkQueue.front]);
 
@@ -109,26 +114,27 @@ void handleInput(int userChoice)
           player1.atkQueue.cards[player1.atkQueue.front].type, player2.atkQueue.cards[player1.atkQueue.front]);
 
           getDamage2Atk(player1.atkQueue.cards[player1.atkQueue.front].atk, player2.atkQueue.cards[player2.atkQueue.front].atk);
-        }
-        else if(p1Num == 1 && p2Num == 2)
-        {
-          getDamage1Atk(player1.atkQueue.cards[player1.atkQueue.front].atk, player2.defQueue.cards[player2.defQueue.front].def);
+         }
+         else if(p1Num == 1 && p2Num == 2)
+         {
+          getDamage1Atk(player1.atkQueue.cards[player1.atkQueue.front].atk, player2.defQueue.cards[player2.defQueue.front].def, &player1);
 
           player1.atkQueue.cards[player1.atkQueue.front].atk += atkBonus(player1.atkQueue.cards[player1.atkQueue.front].type, 
           player2.defQueue.cards[player2.defQueue.front].type, player1.atkQueue.cards[player1.atkQueue.front]);
 
           player2.defQueue.cards[player2.defQueue.front].atk += defBonus(player2.atkQueue.cards[player2.atkQueue.front].type, 
           player1.atkQueue.cards[player1.atkQueue.front].type, player2.defQueue.cards[player2.defQueue.front]);
-        }
-        else if(p1Num == 2 && p2Num == 1)
-        {
-          getDamage1Atk(player2.atkQueue.cards[player2.atkQueue.front].atk, player1.defQueue.cards[player1.defQueue.front].def);
+         }
+         else if(p1Num == 2 && p2Num == 1)
+         {
+          getDamage1Atk(player2.atkQueue.cards[player2.atkQueue.front].atk, player1.defQueue.cards[player1.defQueue.front].def, &player2);
 
           player1.defQueue.cards[player1.defQueue.front].def += defBonus(player1.defQueue.cards[player1.defQueue.front].type, 
           player2.atkQueue.cards[player2.atkQueue.front].type, player1.defQueue.cards[player1.defQueue.front]);
 
           player2.atkQueue.cards[player2.atkQueue.front].atk += atkBonus(player2.atkQueue.cards[player2.atkQueue.front].type, 
           player1.defQueue.cards[player1.defQueue.front].type, player2.atkQueue.cards[player2.atkQueue.front]);
+         }
         }
       }
       removeBattleCards(&player1.atkQueue);
@@ -179,6 +185,11 @@ int main(void)
   return 0;
   
 }
+
+
+
+
+
 
 
 
