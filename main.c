@@ -51,13 +51,13 @@ void handleInput(int userChoice, Game *game) {
          printf("cards have been added to players \n");
          populateDeck(&game->p1.deck);
          populateDeck(&game->p2.deck);
-         playersHaveCards = true;
+         game->playersHaveCards = true;
          break;
 
      case 3:
-     if(playersHaveCards == true && playersCreated == true)
+     if(game->playersHaveCards == true && game->playersCreated == true)
      {
-      battleStarted = true;
+      game->battleStarted = true;
       printf("battling players \n");
       firstPlayer = coinFlip();
 
@@ -74,67 +74,65 @@ void handleInput(int userChoice, Game *game) {
       // activate cards
       if(firstPlayer == 1)
       {
-        while(battleEnded == false)
-        {
-          int p1Num = displayTurnMenu(game->p1.hand, &game->p1);
-          int p2Num = displayTurnMenu(game->p2.hand, &game->p2);
+        while(game->battleEnded == false) {
+            
+            int p1Num = displayTurnMenu(game->p1.hand, &game->p1);
+            int p2Num = displayTurnMenu(game->p2.hand, &game->p2);
 
-         if(p1Num == 1 && p2Num == 1)
-         {
-          getDamage2Atk(player1.atkQueue.cards[player1.atkQueue.front].atk, player2.atkQueue.cards[player2.atkQueue.front].atk);
-         }
-         else if(p1Num == 1 && p2Num == 2)
-         {
-          getDamage1Atk(player1.atkQueue.cards[player1.atkQueue.front].atk, player2.defQueue.cards[player2.defQueue.front].def, &player1);
-         }
-         else if(p1Num == 2 && p2Num == 1)
-         {
-          getDamage1Atk(player2.atkQueue.cards[player2.atkQueue.front].atk, player1.defQueue.cards[player1.defQueue.front].def, &player2);
+         if(p1Num == 1 && p2Num == 1) {
+             
+             getDamage2Atk(game->p1.atkQueue.cards[game->p1.atkQueue.front].atk, game->p2.atkQueue.cards[game->p2.atkQueue.front].atk);
+         } else if(p1Num == 1 && p2Num == 2) {
+             
+             getDamage1Atk(game->p1.atkQueue.cards[game->p1.atkQueue.front].atk, game->p2.defQueue.cards[game->p2.defQueue.front].def, &game->p1);
+         } else if(p1Num == 2 && p2Num == 1) {
+             
+             getDamage1Atk(game->p2.atkQueue.cards[game->p2.atkQueue.front].atk, game->p1.defQueue.cards[game->p1.defQueue.front].def, &game->p2);
          }
         }
       }
       else if(firstPlayer == 2)
       {
-        while(battleEnded == false)
+        while(game->battleEnded == false)
         {
          int p2Num = displayTurnMenu(game->p2.hand, &game->p2);
          int p1Num = displayTurnMenu(game->p1.hand, &game->p1);
          if(p1Num == 1 && p2Num == 1)
          {
-          player1.atkQueue.cards[player1.atkQueue.front].atk += atkBonus(player1.atkQueue.cards[player1.atkQueue.front].type, 
-          player2.atkQueue.cards[player1.atkQueue.front].type, player1.atkQueue.cards[player1.atkQueue.front]);
+          game->p1.atkQueue.cards[game->p1.atkQueue.front].atk += atkBonus(game->p1.atkQueue.cards[game->p1.atkQueue.front].type, 
+          game->p2.atkQueue.cards[game->p1.atkQueue.front].type, game->p1.atkQueue.cards[game->p1.atkQueue.front]);
 
-          player2.atkQueue.cards[player2.atkQueue.front].atk += atkBonus(player2.atkQueue.cards[player2.atkQueue.front].type, 
-          player1.atkQueue.cards[player1.atkQueue.front].type, player2.atkQueue.cards[player1.atkQueue.front]);
+          game->p2.atkQueue.cards[game->p2.atkQueue.front].atk += atkBonus(game->p2.atkQueue.cards[game->p2.atkQueue.front].type, 
+          game->p1.atkQueue.cards[game->p1.atkQueue.front].type, game->p2.atkQueue.cards[game->p1.atkQueue.front]);
 
-          getDamage2Atk(player1.atkQueue.cards[player1.atkQueue.front].atk, player2.atkQueue.cards[player2.atkQueue.front].atk);
+          getDamage2Atk(game->p1.atkQueue.cards[game->p1.atkQueue.front].atk, game->p2.atkQueue.cards[game->p2.atkQueue.front].atk);
          }
          else if(p1Num == 1 && p2Num == 2)
          {
-          getDamage1Atk(player1.atkQueue.cards[player1.atkQueue.front].atk, player2.defQueue.cards[player2.defQueue.front].def, &player1);
+          getDamage1Atk(game->p1.atkQueue.cards[game->p1.atkQueue.front].atk, game->p2.defQueue.cards[game->p2.defQueue.front].def, &game->p1);
 
-          player1.atkQueue.cards[player1.atkQueue.front].atk += atkBonus(player1.atkQueue.cards[player1.atkQueue.front].type, 
-          player2.defQueue.cards[player2.defQueue.front].type, player1.atkQueue.cards[player1.atkQueue.front]);
+          game->p1.atkQueue.cards[game->p1.atkQueue.front].atk += atkBonus(game->p1.atkQueue.cards[game->p1.atkQueue.front].type, 
+          game->p2.defQueue.cards[game->p2.defQueue.front].type, game->p1.atkQueue.cards[game->p1.atkQueue.front]);
 
-          player2.defQueue.cards[player2.defQueue.front].atk += defBonus(player2.atkQueue.cards[player2.atkQueue.front].type, 
-          player1.atkQueue.cards[player1.atkQueue.front].type, player2.defQueue.cards[player2.defQueue.front]);
+          game->p2.defQueue.cards[game->p2.defQueue.front].atk += defBonus(game->p2.atkQueue.cards[game->p2.atkQueue.front].type, 
+          game->p1.atkQueue.cards[game->p1.atkQueue.front].type, game->p2.defQueue.cards[game->p2.defQueue.front]);
          }
          else if(p1Num == 2 && p2Num == 1)
          {
-          getDamage1Atk(player2.atkQueue.cards[player2.atkQueue.front].atk, player1.defQueue.cards[player1.defQueue.front].def, &player2);
+          getDamage1Atk(game->p2.atkQueue.cards[game->p2.atkQueue.front].atk, game->p1.defQueue.cards[game->p1.defQueue.front].def, &game->p2);
 
-          player1.defQueue.cards[player1.defQueue.front].def += defBonus(player1.defQueue.cards[player1.defQueue.front].type, 
-          player2.atkQueue.cards[player2.atkQueue.front].type, player1.defQueue.cards[player1.defQueue.front]);
+          game->p1.defQueue.cards[game->p1.defQueue.front].def += defBonus(game->p1.defQueue.cards[game->p1.defQueue.front].type, 
+          game->p2.atkQueue.cards[game->p2.atkQueue.front].type, game->p1.defQueue.cards[game->p1.defQueue.front]);
 
-          player2.atkQueue.cards[player2.atkQueue.front].atk += atkBonus(player2.atkQueue.cards[player2.atkQueue.front].type, 
-          player1.defQueue.cards[player1.defQueue.front].type, player2.atkQueue.cards[player2.atkQueue.front]);
+          game->p2.atkQueue.cards[game->p2.atkQueue.front].atk += atkBonus(game->p2.atkQueue.cards[game->p2.atkQueue.front].type, 
+          game->p1.defQueue.cards[game->p1.defQueue.front].type, game->p2.atkQueue.cards[game->p2.atkQueue.front]);
          }
         }
       }
-      removeBattleCards(&player1.atkQueue);
-      removeBattleCards(&player1.defQueue);
-      removeBattleCards(&player2.atkQueue);
-      removeBattleCards(&player2.defQueue);
+      removeBattleCards(&game->p1.atkQueue);
+      removeBattleCards(&game->p1.defQueue);
+      removeBattleCards(&game->p2.atkQueue);
+      removeBattleCards(&game->p2.defQueue);
       
      } 
      else
