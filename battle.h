@@ -10,7 +10,9 @@ typedef struct GameState {
   Player p2;
 
   bool playersHaveCards;
-  bool 
+  bool battleStarted;
+  bool battleEnded;
+  int firstPlayer;
 
 } Game;
 
