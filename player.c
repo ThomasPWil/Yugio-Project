@@ -4,11 +4,6 @@
 #include "player.h"
 
 int rounds = 0;
-bool p1First;
-bool p2First;
-
-int p1Choice; // use these to figure out if which we should attack scenario we should play
-int p2Choice; // use these to figure out if which we should attack scenario we should play
 
 
 void printBattleData()
@@ -17,8 +12,10 @@ void printBattleData()
   printf("%s current life points: %d \n \n" , player2.name, player2.hp);
 }
 
-void coinFlip()
+int coinFlip()
 {
+  bool p1First;
+  bool p2First;
   srand(time(NULL));
   int p1num = 1;
   int p2num = 2;
@@ -28,13 +25,13 @@ void coinFlip()
   if(randNum == 1)
   {
     printf("num was 1 player 1 goes first \n");
-    p1First = true;
+    return 1;
   }
   else if(randNum == 2)
   {
     printf("num was 2 player 2 goes first \n");
-    p2First = true;
   }
+  return 2;
 }
 
 void LPCalculations(int *currLP, int damage)
