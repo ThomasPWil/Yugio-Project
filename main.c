@@ -4,12 +4,6 @@
 #include <time.h>
 #include <stdbool.h>
 
-bool playersHaveCards;
-bool playersCreated;
-bool battleStarted = false;
-bool battleEnded = false;
-int firstPlayer;
-
 void createMenu()
 {
     printf("========== YU-GI-OH! CARD BATTLE ==========\n");
@@ -29,7 +23,7 @@ int getUserInput()
 }
 
 
-void handleBadInput()
+void handleBadInput(GameState *game)
 {
   int c;
   while ((c = getchar()) != '\n' && c != EOF) {
@@ -37,27 +31,28 @@ void handleBadInput()
   }
   createMenu();
   int choice = getUserInput();
-  //handleInput(choice);
+  handleInput(choice, game);
 }
 
 
-void handleInput(int userChoice)
-{
+void handleInput(int userChoice, Game *game) {
     switch(userChoice)
     {
      case 1:
-     printf(" players have been created \n");
-     createPlayers();
-     playersCreated = true;
-     
-     break;
+         printf("Enter name for Player 1: ");
+         scanf("%s", game->p1.name);
+         printf("Enter name for Player 2: ");
+         scanf("%s", game->p2.name);
+         
+         &game->playersCreated = true;
+         break;
 
      case 2:
-     printf("cards have been added to players \n");
-     populateDeck(&player1.deck);
-     populateDeck(&player2.deck);
-     playersHaveCards = true;
-     break;
+         printf("cards have been added to players \n");
+         populateDeck(&game->p1.deck);
+         populateDeck(&game->p2.deck);
+         playersHaveCards = true;
+         break;
 
      case 3:
      if(playersHaveCards == true && playersCreated == true)
@@ -68,8 +63,8 @@ void handleInput(int userChoice)
 
       // draw cards
       
-      queueHand(&player1);
-      queueHand(&player2);
+      queueHand(&game->p1);
+      queueHand(&game->p2);
 
     
 
@@ -81,8 +76,8 @@ void handleInput(int userChoice)
       {
         while(battleEnded == false)
         {
-          int p1Num = displayTurnMenu(player1.hand, &player1);
-          int p2Num = displayTurnMenu(player2.hand, &player2);
+          int p1Num = displayTurnMenu(game->p1.hand, &game->p1);
+          int p2Num = displayTurnMenu(game->p2.hand, &game->p2);
 
          if(p1Num == 1 && p2Num == 1)
          {
@@ -102,8 +97,8 @@ void handleInput(int userChoice)
       {
         while(battleEnded == false)
         {
-         int p2Num = displayTurnMenu(player2.hand, &player2);
-         int p1Num = displayTurnMenu(player1.hand, &player1);
+         int p2Num = displayTurnMenu(game->p2.hand, &game->p2);
+         int p1Num = displayTurnMenu(game->p1.hand, &game->p1);
          if(p1Num == 1 && p2Num == 1)
          {
           player1.atkQueue.cards[player1.atkQueue.front].atk += atkBonus(player1.atkQueue.cards[player1.atkQueue.front].type, 
@@ -173,23 +168,16 @@ void handleInput(int userChoice)
 
 int main(void)
 {
-  while(battleStarted == false)
-  {
-   createMenu();
-   int choice = getUserInput();
-   handleInput(choice);
-  }
-  
+    Game game = {0};
 
-  return 0;
-  
+    while (!game.battleStarted)
+    {
+        createMenu();
+
+        int choice = getUserInput();
+
+        handleInput(choice, &game);
+    }
+
+    return 0;
 }
-
-
-
-
-
-
-
-
-
