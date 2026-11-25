@@ -164,8 +164,7 @@ void handleInput(int userChoice, Game *game) {
 
 
 
-int main(void)
-{
+int main(void) {
     Game game = {0};
 
     while (!game.battleStarted)
