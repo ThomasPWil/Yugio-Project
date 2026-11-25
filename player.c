@@ -12,28 +12,6 @@ void printBattleData()
   printf("%s current life points: %d \n \n" , player2.name, player2.hp);
 }
 
-int coinFlip()
-{
-  bool p1First;
-  bool p2First;
-  srand(time(NULL));
-  int p1num = 1;
-  int p2num = 2;
-
-  int randNum = (rand() % 2) + 1;
-
-  if(randNum == 1)
-  {
-    printf("num was 1 player 1 goes first \n");
-    return 1;
-  }
-  else if(randNum == 2)
-  {
-    printf("num was 2 player 2 goes first \n");
-  }
-  return 2;
-}
-
 void LPCalculations(int *currLP, int damage)
 {
   *currLP -= damage;
@@ -97,27 +75,6 @@ void removeBattleCards(Queue *q)
   }
 }
 
-void endBattle()
-{
-  if(player1.hp <= 0)
-  {
-    printf("player2 wins!\n");
-  }
-  else if(player2.hp <= 0 )
-  {
-    printf("player1 wins!\n");
-  }
-  else if(player1.deck.top == 0 && player2.deck.top == 0)
-  {
-    // draw condition occurs when both players run out of cards
-    printf("draw! \n");
-  }
-  
-  //printf("player1 life points %d", p1_hp);
-  //printf("player2 life points %d", p2_hp);
-  printf("rounds played: %d \n", rounds);
-}
-
 int displayTurnMenu(MonsterCard hand[5], Player *player)
 {
   printf("%s's turn \n \n",player->name);
@@ -128,8 +85,7 @@ int displayTurnMenu(MonsterCard hand[5], Player *player)
   scanf("%d" , &choice);
   printf("\n");
 
-  if(choice == 1)
-  {
+  if(choice == 1) {
     printf("choose an attack card to activate (1-5)\n");
     printf("player hand: %d \n", player->handCount);
 
@@ -144,9 +100,7 @@ int displayTurnMenu(MonsterCard hand[5], Player *player)
     enqueue(&player->atkQueue, player->hand[atkChoice]);
     removeAtIndex(player->hand, player, atkChoice);
     return choice;
-  }
-  else if(choice == 2)
-  {
+  } else if(choice == 2) {
     printf("choose a defense card to activate\n");
     // display list of cards in hand
     int defChoice = 0;
@@ -159,10 +113,6 @@ int displayTurnMenu(MonsterCard hand[5], Player *player)
     removeAtIndex(player->hand, player, defChoice);
     return choice;
     
-  }
-  else
-  {
-    printf("test");
   }
 }
 
