@@ -8,8 +8,7 @@ bool playersHaveCards;
 bool playersCreated;
 bool battleStarted = false;
 bool battleEnded = false;
-bool p1First2;
-bool p2First2;
+int firstPlayer;
 
 void createMenu()
 {
@@ -65,7 +64,7 @@ void handleInput(int userChoice)
      {
       battleStarted = true;
       printf("battling players \n");
-      coinFlip();
+      firstPlayer = coinFlip();
 
       // draw cards
       
@@ -78,7 +77,7 @@ void handleInput(int userChoice)
      
 
       // activate cards
-      if(p1First == true)
+      if(firstPlayer == 1)
       {
         while(battleEnded == false)
         {
@@ -99,7 +98,7 @@ void handleInput(int userChoice)
          }
         }
       }
-      else if(p2First == true)
+      else if(firstPlayer == 2)
       {
         while(battleEnded == false)
         {
