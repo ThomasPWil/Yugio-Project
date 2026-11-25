@@ -5,6 +5,15 @@
 #include "player.h"
 #include <stdbool.h>
 
+typedef struct GameState {
+  Player p1;
+  Player p2;
+
+  bool playersHaveCards;
+  bool 
+
+} Game;
+
 void declareWinner();
 
 void coinFlip();
