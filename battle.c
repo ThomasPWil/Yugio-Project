@@ -10,24 +10,23 @@ bool p2First;
 int p1Choice; // use these to figure out if which we should attack scenario we should play
 int p2Choice; // use these to figure out if which we should attack scenario we should play
 
-void coinFlip()
+
+int coinFlip()
 {
   srand(time(NULL));
-  int p1num = 1;
-  int p2num = 2;
 
   int randNum = (rand() % 2) + 1;
 
   if(randNum == 1)
   {
     printf("num was 1 player 1 goes first \n");
-    p1First = true;
+    return 1;
   }
   else if(randNum == 2)
   {
     printf("num was 2 player 2 goes first \n");
-    p2First = true;
   }
+  return 2;
 }
 
 void LPCalculations(int currLP, int damage)
@@ -102,8 +101,7 @@ void endBattle()
   printf("rounds played: %d \n", rounds);
 }
 
-int displayTurnMenu(MonsterCard hand[5], Player *player)
-{
+int displayTurnMenu(MonsterCard hand[5], Player *player) {
   printf("%s's turn",player->name);
   // print hand 
   int choice = 0;
@@ -125,9 +123,7 @@ int displayTurnMenu(MonsterCard hand[5], Player *player)
     enqueue(&player->atkQueue, player->hand[atkChoice]);
     removeAtIndex(player->hand, *player, atkChoice);
     return player->hand[atkChoice].atk;
-  }
-  else if(choice == 2)
-  {
+  } else if(choice == 2) {
     printf("choose a defense card to activate\n");
     // display list of cards in hand
     int defChoice = 0;
