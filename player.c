@@ -1,120 +1,142 @@
+#include "player.h"
 #include "card.h"
-#include "player.h"
-#include "battle.h"
-#include "player.h"
 
-int rounds = 0;
+Player player1;
+Player player2;
 
+int p1_hp = 8000;
+int p2_hp = 8000;
 
-void printBattleData()
-{
-  printf("%s current life points: %d \n" , player1.name, player1.hp);
-  printf("%s current life points: %d \n \n" , player2.name, player2.hp);
+int deckTotal = 30;
+
+Deck deck_p1;
+Deck deck_p2;
+
+FILE *cards;
+
+MonsterCard cardArr[60] = {};
+
+Queue *createQueue() { //creates and initializes queue
+    Queue *newQueue = malloc(sizeof(Queue));
+    
+    if(newQueue == NULL) {
+        printf("Memory Allocation Failed\n");
+        return NULL;
+    }
+
+    newQueue->front = 0;
+    newQueue->rear = -1;
+    newQueue->size = 0;
+    
+    return newQueue;
 }
 
-void LPCalculations(int *currLP, int damage)
-{
-  *currLP -= damage;
+int isEmpty(Queue *q) { //checks if a queue is empty
+    return q->size == 0;
 }
 
-// use this if we have one attcker and other is defensive
-int getDamage1Atk(int atk, int def, Player *player)
-{
-  // need to check for type bonuses calcualtions
-  int damage = atk - def;
-  printf("damage dealt: %d to %s \n", atk - def, player->name);
-  LPCalculations(&player->hp,damage);
-  printBattleData();
-  return damage;
+int isFull(Queue *q) { //checks if a queue is full
+    return q->size == 30;
 }
 
-// use if we have 2 attackers
-int getDamage2Atk(int atk1,int atk2)
-{
-  int damage = 0;
+void enqueue(Queue* q, MonsterCard card) {
+    if (q->size == 30) {
+        printf("Queue is full!\n");
+        return;
+    }
+
+    q->rear = (q->rear + 1) % 30;
+    q->cards[q->rear] = card;
+    q->size++;
+}
+
+MonsterCard dequeue(Queue *q) {
+    MonsterCard card;
+
+    if(q->size == 0) {
+        printf("Queue is empty!\n");
+        return card;
+    }
+
+    card = q->cards[q->front];
+    q->front = (q->front + 1) % 30;
+    q->size--;
+
+    return card;
+}
+
+void queueHand(Player *player) {
+  // draw 5 cards into player 1 and player 2 hands
+  // move cards from deck array into hand array
+   
+   while (player->handCount < 5 && player->deck.top > 0) {
+      player->deck.top--;
+      player->hand[player->handCount] = player->deck.cards[player->deck.top];
+      player->handCount++;
+    }
  
-  if(atk1 > atk2)
-  {
-    // need to check for type bonuses
-    damage = atk1 - atk2;
-    LPCalculations(&player2.hp,damage);
-    printf("damage dealt to player 2: %d\n", damage);
-    printBattleData();
-    return damage;
+}
+
+void drawCard(Player *player)
+{ 
+  player->deck.top--;
+  player->hand[player->handCount] = player->deck.cards[player->deck.top];
+  player->handCount++;
+
+}
+
+int handleCardFile() {
+  cards = fopen("cards.txt", "r");
+  char buffer[100];
+
+  char name[100];
+  int attack;
+  int defense;
+  char type[100];
+
+  int curr = 0;
   
-  }
-  else if(atk2 > atk1)
+  if(cards == NULL)
   {
-    LPCalculations(&player2.hp,damage);
-    damage = atk2 - atk1;
-    printf("damage dealt to player 1: %d\n", damage);
-    printBattleData();
-    return damage;
-  }
-  else if(atk1 == atk2)
-  {
+    printf("could not find cards file");
     return 0;
   }
+  
+  while (curr < 30 && fscanf(cards, " %99[^,],%d,%d,%49[^\r\n]", name, &attack, &defense, type) == 4) {
+      cardArr[curr] = makeCard(name, attack, defense, type);
+      curr++;
+  }
+
+    fclose(cards);
+    return curr;
 }
 
-void removeAtIndex(MonsterCard hand[5], Player *player, int index)
+void populateDeck(Deck *deck)
 {
-  for(int i = index; i < player->handCount - 1; i++) 
+  int numCards = handleCardFile();
+  // use for loop and have an array of cards
+  for(int i = 0; i < numCards; i++)
   {
-    player->hand[i] = player->hand[i + 1];
+    deck->cards[i] = cardArr[i];
   }
-  player->handCount--;
-  drawCard(player);
+
+  deck->top = numCards;
 }
 
-void removeBattleCards(Queue *q)
+void createPlayers()
 {
-  if(!isEmpty(q))
-  {
-    dequeue(q);
-  }
+  player1 = (Player){"Player 1",p1_hp, deck_p1};
+  player2 = (Player){"Player 2",p2_hp,deck_p2};
+  player1.atkQueue = *createQueue();
+  player1.defQueue = *createQueue();
+
+  player2.atkQueue = *createQueue();
+  player2.defQueue = *createQueue();
+
+  queueHand(&player1);
+  queueHand(&player2);
 }
 
-int displayTurnMenu(MonsterCard hand[5], Player *player)
-{
-  printf("%s's turn \n \n",player->name);
-  // print hand 
-  int choice = 0;
-  printf("choose a number (1-2) 1 to activate an attack card \n");
-  printf("2 to activate a defense card \n");
-  scanf("%d" , &choice);
-  printf("\n");
-
-  if(choice == 1) {
-    printf("choose an attack card to activate (1-5)\n");
-    printf("player hand: %d \n", player->handCount);
-
-    // display list of cards in hand
-    for(int i = 0; i < player->handCount; i++)
-    {
-      printf("%s %d %d %s \n", player->hand[i].name, player->hand[i].atk, player->hand[i].def,  player->hand[i].type);
-    }
-
-    int atkChoice = 0;
-    scanf("%d", &atkChoice);
-    enqueue(&player->atkQueue, player->hand[atkChoice]);
-    removeAtIndex(player->hand, player, atkChoice);
-    return choice;
-  } else if(choice == 2) {
-    printf("choose a defense card to activate\n");
-    // display list of cards in hand
-    int defChoice = 0;
-    for(int i = 0; i < player->handCount; i++)
-    {
-      printf("%s %d %d \n", player->hand[i].name, player->hand[i].atk, player->hand[i].def);
-    }
-    scanf("%d", &defChoice);
-    enqueue(&player->defQueue, player->hand[defChoice]);
-    removeAtIndex(player->hand, player, defChoice);
-    return choice;
-    
-  }
-}
 
 
 
