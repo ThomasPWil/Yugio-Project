@@ -4,17 +4,7 @@
 #include <time.h>
 #include "player.h"
 #include <stdbool.h>
-
-typedef struct GameState {
-  Player p1;
-  Player p2;
-
-  bool playersHaveCards;
-  bool battleStarted;
-  bool battleEnded;
-  int firstPlayer;
-
-} Game;
+#include <math.h>
 
 void declareWinner();
 
@@ -42,3 +32,6 @@ void printCurrentBattleData();
 extern bool p1First;
 
 extern bool p2First;
+
+
+
