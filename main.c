@@ -4,6 +4,29 @@
 #include <time.h>
 #include <stdbool.h>
 
+void createMenu();
+int getUserInput();
+void handleBadInput(Game *game);
+void handleInput(int userChoice, Game *game);
+
+
+int main(void) {
+    Game game = {0};
+
+    while (!game.battleStarted)
+    {
+        createMenu();
+
+        int choice = getUserInput();
+
+        handleInput(choice, &game);
+    }
+
+    return 0;
+}
+
+
+
 void createMenu()
 {
     printf("========== YU-GI-OH! CARD BATTLE ==========\n");
@@ -17,7 +40,7 @@ int getUserInput()
 {
     int userChoice;
     printf("select an option: ");
-    scanf(" %d", &userChoice);
+    scanf("%d", &userChoice);
 
     return userChoice;
 }
@@ -31,7 +54,7 @@ void handleBadInput(Game *game)
   }
   createMenu();
   int choice = getUserInput();
-  handleInput(choice, game);
+  handleInput(choice, &game);
 }
 
 
@@ -159,22 +182,4 @@ void handleInput(int userChoice, Game *game) {
    
 
    
-}
-
-
-
-
-int main(void) {
-    Game game = {0};
-
-    while (!game.battleStarted)
-    {
-        createMenu();
-
-        int choice = getUserInput();
-
-        handleInput(choice, &game);
-    }
-
-    return 0;
 }
