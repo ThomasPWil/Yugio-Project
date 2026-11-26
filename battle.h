@@ -9,6 +9,17 @@
 #include <stdbool.h>
 #include <math.h>
 
+typedef struct GameState {
+  Player p1;
+  Player p2;
+
+  bool playersHaveCards;
+  bool battleStarted;
+  bool battleEnded;
+  int firstPlayer;
+
+} Game;
+
 void declareWinner();
 
 void coinFlip();
