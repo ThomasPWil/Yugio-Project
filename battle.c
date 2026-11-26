@@ -1,7 +1,4 @@
-#include "card.h"
-#include "player.h"
 #include "battle.h"
-#include "player.h"
 
 int rounds = 0;
 bool p1First;
