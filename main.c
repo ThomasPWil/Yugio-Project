@@ -23,7 +23,7 @@ int getUserInput()
 }
 
 
-void handleBadInput(GameState *game)
+void handleBadInput(Game *game)
 {
   int c;
   while ((c = getchar()) != '\n' && c != EOF) {
@@ -59,7 +59,7 @@ void handleInput(int userChoice, Game *game) {
      {
       game->battleStarted = true;
       printf("battling players \n");
-      firstPlayer = coinFlip();
+      game->firstPlayer = coinFlip();
 
       // draw cards
       
@@ -72,7 +72,7 @@ void handleInput(int userChoice, Game *game) {
      
 
       // activate cards
-      if(firstPlayer == 1)
+      if(game->firstPlayer == 1)
       {
         while(game->battleEnded == false) {
             
@@ -91,7 +91,7 @@ void handleInput(int userChoice, Game *game) {
          }
         }
       }
-      else if(firstPlayer == 2)
+      else if(game->firstPlayer == 2)
       {
         while(game->battleEnded == false)
         {
