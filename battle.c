@@ -1,38 +1,28 @@
 #include "battle.h"
 
 int rounds = 0;
-bool p1First;
-bool p2First;
-
-int p1Choice; // use these to figure out if which we should attack scenario we should play
-int p2Choice; // use these to figure out if which we should attack scenario we should play
 
 
-void printBattleData()
+void printBattleData(Game *game)
 {
-  printf("%s current life points: %d \n" , player1.name, player1.hp);
-  printf("%s current life points: %d \n \n" , player2.name, player2.hp);
+  printf("%s current life points: %d \n" , game->p1.name, game->p1.hp);
+  printf("%s current life points: %d \n \n" , game->p2.name, game->p2.hp);
   rounds++;
   
 }
 
-void coinFlip()
-{
+int coinFlip() {
   srand(time(NULL));
-  int p1num = 1;
-  int p2num = 2;
 
   int randNum = (rand() % 2) + 1;
 
-  if(randNum == 1)
-  {
+  if(randNum == 1) {
     printf("num was 1 player 1 goes first \n \n \n");
-    p1First = true;
+    return 1;
   }
-  else if(randNum == 2)
-  {
+  else {
     printf("num was 2 player 2 goes first \n \n \n");
-    p2First = true;
+    return 2;
   }
 }
 
@@ -43,7 +33,7 @@ void LPCalculations(int *currLP, int damage)
 }
 
 // use this if we have one attcker and other is defensive
-int getDamage1Atk(int atk, int def, Player *player)
+int getDamage1Atk(int atk, int def, Player *player, Game *game)
 {
 
   // need to check for type bonuses calcualtions
@@ -54,32 +44,32 @@ int getDamage1Atk(int atk, int def, Player *player)
     return 0;
   }
   
-  if(!isEmpty(&player1.atkQueue))
+  if(!isEmpty(&game->p1.atkQueue))
   {
     printf("player1 activates %s \n", player1.atkQueue.cards[player1.atkQueue.front].name);
   }
 
-  if(!isEmpty(&player1.defQueue))
+  if(!isEmpty(&game->p1.defQueue))
   {
     printf("player1 activates %s \n", player1.defQueue.cards[player1.defQueue.front].name);
   }
   
-  if(!isEmpty(&player2.atkQueue))
+  if(!isEmpty(&game->p2.atkQueue))
   {
     printf("player2 activates %s \n", player2.atkQueue.cards[player2.atkQueue.front].name);
   }
 
-  if(!isEmpty(&player2.defQueue))
+  if(!isEmpty(&game->p2.defQueue))
   {
     printf("player2 activates %s \n", player2.defQueue.cards[player2.defQueue.front].name);
   }
  
 
-  if(p1First == true)
+  if(game->firstPlayer == 1)
   {
     printf("%s attacks %s \n", player1.atkQueue.cards[player1.atkQueue.front].name,  player2.atkQueue.cards[player2.atkQueue.front].name);
   }
-  else if(p2First == true)
+  else if(game->firstPlayer == 2)
   {
     printf("%s attacks %s \n", player2.atkQueue.cards[player2.atkQueue.front].name,  player1.atkQueue.cards[player1.atkQueue.front].name);
   }
@@ -91,7 +81,7 @@ int getDamage1Atk(int atk, int def, Player *player)
 }
 
 // use if we have 2 attackers
-int getDamage2Atk(int atk1,int atk2)
+int getDamage2Atk(int atk1,int atk2, Game *game)
 {
   int damage = 0;
  
@@ -100,11 +90,11 @@ int getDamage2Atk(int atk1,int atk2)
     // need to check for type bonuses
     damage = atk1 - atk2;
     LPCalculations(&player2.hp,damage);
-    if(p1First == true)
+    if(game->firstPlayer == 1)
     {
       printf("%s attacks %s \n", player1.atkQueue.cards[player1.atkQueue.front].name,  player2.atkQueue.cards[player2.atkQueue.front].name);
     }
-    else if(p2First == true)
+    else if(game->firstPlayer == 2)
     {
       printf("%s attacks %s \n", player2.atkQueue.cards[player2.atkQueue.front].name,  player2.atkQueue.cards[player2.atkQueue.front].name);
     }
@@ -119,11 +109,11 @@ int getDamage2Atk(int atk1,int atk2)
     damage = atk2 - atk1;
     LPCalculations(&player1.hp,damage);
 
-    if(p1First == true)
+    if(game->firstPlayer == 1)
     {
       printf("%s attacks %s \n", player1.atkQueue.cards[player1.atkQueue.front].name,  player2.atkQueue.cards[player2.atkQueue.front].name);
     }
-    else if(p2First == true)
+    else if(game->firstPlayer == 2)
     {
       printf("%s attacks %s \n", player2.atkQueue.cards[player2.atkQueue.front].name,  player2.atkQueue.cards[player2.atkQueue.front].name);
     }
@@ -157,17 +147,17 @@ void removeBattleCards(Queue *q)
   }
 }
 
-void endBattle()
+void endBattle(Game *game)
 {
-  if(player1.hp <= 0)
+  if(game->p1.hp <= 0)
   {
     printf("player2 wins!\n");
   }
-  else if(player2.hp <= 0 )
+  else if(game->p2.hp <= 0 )
   {
     printf("player1 wins!\n");
   }
-  else if(player1.deck.top == 0 && player2.deck.top == 0)
+  else if(game->p1.deck.top == 0 && game->p2.deck.top == 0)
   {
     // draw condition occurs when both players run out of cards
     printf("draw! \n");
@@ -241,10 +231,3 @@ int displayTurnMenu(MonsterCard hand[5], Player *player)
     //printf("test");
   }
 }
-
-
-
-
-
-
-
