@@ -40,16 +40,22 @@ void enqueue(Queue *q, MonsterCard card);
 
 MonsterCard dequeue(Queue *q);
 
-void queueHand();
+void queueHand(Player *player);
+
+void drawCard(Player *player);
 
 int handleCardFile();
 
-void populateDeck(Deck deck);
+void populateDeck(Deck *deck);
 
 void createPlayers();
+
+
+
 
 
 // player structs to be created in player.c
 extern Player player1;
 extern Player player2;
+
 
