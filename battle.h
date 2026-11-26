@@ -1,3 +1,6 @@
+#ifndef BATTLE_H
+#define BATTLE_H
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -35,3 +38,4 @@ extern bool p2First;
 
 
 
+#endif
