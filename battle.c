@@ -46,12 +46,12 @@ int getDamage1Atk(int atk, int def, Player *player, Game *game)
   
   if(!isEmpty(&game->p1.atkQueue))
   {
-    printf("player1 activates %s \n", player1.atkQueue.cards[player1.atkQueue.front].name);
+    printf("Player 1 activates %s \n", game->p1.atkQueue.cards[game->p1.atkQueue.front].name);
   }
 
   if(!isEmpty(&game->p1.defQueue))
   {
-    printf("player1 activates %s \n", player1.defQueue.cards[player1.defQueue.front].name);
+    printf("Player 1 activates %s \n", game->p1.defQueue.cards[game->p1.defQueue.front].name);
   }
   
   if(!isEmpty(&game->p2.atkQueue))
@@ -67,11 +67,11 @@ int getDamage1Atk(int atk, int def, Player *player, Game *game)
 
   if(game->firstPlayer == 1)
   {
-    printf("%s attacks %s \n", player1.atkQueue.cards[player1.atkQueue.front].name,  player2.atkQueue.cards[player2.atkQueue.front].name);
+    printf("%s attacks %s \n", game->p1.atkQueue.cards[game->p1.atkQueue.front].name,  player2.atkQueue.cards[player2.atkQueue.front].name);
   }
   else if(game->firstPlayer == 2)
   {
-    printf("%s attacks %s \n", player2.atkQueue.cards[player2.atkQueue.front].name,  player1.atkQueue.cards[player1.atkQueue.front].name);
+    printf("%s attacks %s \n", player2.atkQueue.cards[player2.atkQueue.front].name,  game->p1.atkQueue.cards[game->p1.atkQueue.front].name);
   }
 
   printf("damage dealt: %d to %s \n", atk - def, player->name);
@@ -92,7 +92,7 @@ int getDamage2Atk(int atk1,int atk2, Game *game)
     LPCalculations(&player2.hp,damage);
     if(game->firstPlayer == 1)
     {
-      printf("%s attacks %s \n", player1.atkQueue.cards[player1.atkQueue.front].name,  player2.atkQueue.cards[player2.atkQueue.front].name);
+      printf("%s attacks %s \n", game->p1.atkQueue.cards[game->p1.atkQueue.front].name,  player2.atkQueue.cards[player2.atkQueue.front].name);
     }
     else if(game->firstPlayer == 2)
     {
@@ -107,11 +107,11 @@ int getDamage2Atk(int atk1,int atk2, Game *game)
   else if(atk2 > atk1)
   {
     damage = atk2 - atk1;
-    LPCalculations(&player1.hp,damage);
+    LPCalculations(&game->p1.hp,damage);
 
     if(game->firstPlayer == 1)
     {
-      printf("%s attacks %s \n", player1.atkQueue.cards[player1.atkQueue.front].name,  player2.atkQueue.cards[player2.atkQueue.front].name);
+      printf("%s attacks %s \n", game->p1.atkQueue.cards[game->p1.atkQueue.front].name,  player2.atkQueue.cards[player2.atkQueue.front].name);
     }
     else if(game->firstPlayer == 2)
     {
@@ -155,16 +155,13 @@ void endBattle(Game *game)
   }
   else if(game->p2.hp <= 0 )
   {
-    printf("player1 wins!\n");
+    printf("player 1 wins!\n");
   }
   else if(game->p1.deck.top == 0 && game->p2.deck.top == 0)
   {
     // draw condition occurs when both players run out of cards
     printf("draw! \n");
   }
-  
-  //printf("player1 life points %d", p1_hp);
-  //printf("player2 life points %d", p2_hp);
   printf("rounds played: %d \n", rounds);
 }
 
